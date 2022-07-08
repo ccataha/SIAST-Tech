@@ -1,0 +1,7 @@
+/usr/local/bin/UTscapy
+/usr/local/bin/cicflowmeter
+/usr/local/bin/f2py
+/usr/local/bin/f2py3
+/usr/local/bin/f2py3.10
+/usr/local/bin/scapy
+/usr/local/lib/python3.10/dist-packages/cicflowmeter-0.1.6-py3.10.egg

@@ -39,6 +39,19 @@ sudo su
 . venv/bin/activate 
 flask run
 ```
+Установка и удаление через setup.py
+sudo python setup.py install --record files.txt
+# inspect files.txt to make sure it looks ok. Then:
+tr '\n' '\0' < files.txt | xargs -0 sudo rm -f --
+
+If you have problems with requests module:
+* grant you have local cicflowmeter pyenv 2.7.18
+install requests lib through apt install 
+* do: sudo su 
+. venv/bin/activate
+flask run
+* if you have problems with libpcap, do: apt install -y libpcap0.8
+flask run
 
 
 

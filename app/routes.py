@@ -194,9 +194,6 @@ def predict():
     print(resp)
     return jsonify(resp)
 
-
-
-
 	
 
 @app.route('/home')
