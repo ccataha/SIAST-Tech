@@ -53,5 +53,13 @@ flask run
 * if you have problems with libpcap, do: apt install -y libpcap0.8
 flask run
 
-
+db configure:
+*sudo apt install postgresql postgresql-contrib
+*sudo -u postgres psql
+*postgres-# create database SIAST_USERS
+*postgres-# create user siast_user with passsword 'ninja'
+*postgres-# alter role siast_user set client_encoding to 'utf8'
+*postgres-# alter role siast_user set default_transaction_isolation TO 'read committed'
+*postgres-# alter role siast_user set timezone to 'UTC'
+*postgres-# grant all privileges on database SIAST_USERS to siast_user
 
