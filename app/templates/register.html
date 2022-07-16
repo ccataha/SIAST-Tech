@@ -1,41 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <!-- Кодировка веб-страницы -->
+  <meta charset="utf-8">
+  <!-- Настройка viewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>СИАСТ - Регистрация</title>
+  <!-- Custom CSS-->
+  <link rel="stylesheet" href="{{url_for('static',filename='assets/css/login.css')}}">
+  <!-- Bootstrap CSS (Cloudflare CDN) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/css/bootstrap.min.css" integrity="sha512-T584yQ/tdRR5QwOpfvDfVQUidzfgc2339Lc8uBDtcp/wYu80d7jwBgAxbyMh0a9YM9F8N3tdErpFI8iaGx6x5g==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <!-- jQuery (Cloudflare CDN) -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- Bootstrap Bundle JS (Cloudflare CDN) -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js" integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
-<h1>Register page</h1>
-
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul class=flashes>
-    {% for message in messages %}
-      <li>{{ message }}</li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
-
-<form method="POST">
-    <table>
-        <tr>
-            <td>Login</td>
-            <td><input type="text" name="login"></td>
-        </tr>
-        <tr>
-            <td>Password</td>
-            <td><input type="password" name="password"></td>
-        </tr>
-        <tr>
-            <td>Password retype</td>
-            <td><input type="password" name="password2"></td>
-        </tr>
-        <tr>
-            <td><a href="{{ url_for('login_page') }}">Login</a></td>
-            <td><input type="submit" value="Register"></td>
-        </tr>
-    </table>
-</form>
-</body>
-</html>
+<!-- Контент страницы -->
+  <form method="POST">
+    <section class="vh-100 gradient-custom">
+      
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+              <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                <div class="card-body p-5 text-center">
+      
+                  <div class="mb-md-5 mt-md-4 pb-5">
+      
+                    <h2 class="fw-bold mb-2 text-uppercase">Регистрация</h2>
+                    <p class="text-white-50 mb-5">Введите учетные данные</p>
+      
+                    <div class="form-outline form-white mb-4">
+                      <input type="text" id="typeLoginX" name="login" class="form-control form-control-lg" />
+                      <label class="form-label" for="typeLoginX">Логин</label>
+                    </div>
+      
+                    <div class="form-outline form-white mb-4">
+                      <input type="password" id="typePasswordX" name="password" class="form-control form-control-lg" />
+                      <label class="form-label" for="typePasswordX">Пароль</label>
+                    </div>
+                    <div class="form-outline form-white mb-4">
+                      <input type="password" id="typePasswordX" name="password2" class="form-control form-control-lg" />
+                      <label class="form-label" for="typePasswordX">Повторите пароль</label>
+                    </div>
+                    <a href="{{ url_for('login_page') }}"> <button class="btn btn-outline-light btn-lg px-5" type="submit">Зарегистрироваться</button> </a>
+                  </div>    
+     
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </form>
+  </body>
+  </html>
