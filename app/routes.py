@@ -221,7 +221,7 @@ def login_page():
         if user and check_password_hash(user.password, password):
             login_user(user)
 
-            next_page = request.args.get('next')
+            next_page = request.args.get('next') #необходим дебаг петли (register -> login -> register)
 
             return redirect(next_page)
         else:
@@ -258,7 +258,7 @@ def register():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('login'))
+    return redirect(url_for('login_page'))
 
 
 @app.after_request
