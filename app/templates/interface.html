@@ -17,15 +17,12 @@ open active
                                 <h2>Выбрать интерфейс</h2>                          
                             </div> 
                                        
-                            <div class="col-lg-6 col-md-4 col-sm-12 text-right">                     
+                            <div class="col-lg-6 col-md-4 col-sm-12 text-right">   
+                                <a href="{{ url_for('logout')}}">
+                                    <button class="btn btn-primary btn-round btn-simple float-right hidden-xs m-l-10" >Выйти из УЗ</button>
+                                </a>                         
                                
-                             
-                                <button class="btn btn-primary btn-round btn-simple float-right hidden-xs m-l-10" onclick="window.location.href='/testing'">Тестирование модели</button>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12 text-right">                     
-                               
-                             
-                                <button class="btn btn-primary btn-round btn-simple float-right hidden-xs m-l-10" onclick="window.location.href='/logout'">Выйти</button>
+                                <button class="btn btn-primary btn-round btn-simple float-right hidden-xs m-l-10"  onclick="window.location.href='/testing'">Тестирование модели</button>
                             </div>
                         </div>
                     </div>
