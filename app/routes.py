@@ -258,7 +258,7 @@ def register():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('login_page'))
+    return redirect(url_for('index')) #or login_page
 
 
 @app.after_request
