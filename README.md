@@ -1,5 +1,11 @@
 # Real Time Network Intrusion Detection System Using Machine Learning
-# В работе
+# Roadmap
+- [х] Авторизация
+- [x] Админ панель и рзграничение прав (Отключить регистрацию из логина и/или сделать подтверждение админом)
+- [ ] Дебаг дашборда по realtime атакам
+- [ ] Загрузка новой версии обученной модели
+
+# Установка
 ```sh
 cd cicflowmeter
 sudo python3 setup.py install 
