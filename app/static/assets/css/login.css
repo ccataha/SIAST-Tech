@@ -8,3 +8,23 @@
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
     }
+body {
+        margin: 0;
+        padding: 0;
+        background: url("{{url_for('static',filename='assets/video/static-video.png')}}") #fff;
+        background-attachment: fixed;
+        background-size: cover;
+        
+    }
+
+#video-background {
+        position: fixed;
+        right: 0; 
+        bottom: 0;
+        min-width: 100%; 
+        min-height: 100%;
+        width: auto; 
+        height: auto;
+        z-index: -100;
+        filter: brightness(50%);
+      }

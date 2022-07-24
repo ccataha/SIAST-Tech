@@ -1,4 +1,4 @@
-from flask import render_template,flash,redirect,url_for,request, session,  Response
+from flask import render_template, flash, redirect, url_for, request, session,  Response
 from flask import request, json, jsonify, Response 
 
 from flask_login import login_user, login_required, logout_user
@@ -17,7 +17,7 @@ import pandas as pd
 import pickle
 import os, signal
 from app.forms import If_form
-from app import app, db
+from app import app, db, manager
 from app.models import User
 flows = []
 resp = {}
@@ -29,9 +29,13 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 
-@app.route('/',methods=['POST','GET'])
-@login_required           # decorators that modifies function follows
+@app.route('/',methods=['GET'])  # 
 def index():
+    return render_template('index.html')
+       
+@app.route('/analyze',methods=['POST','GET'])  # 
+@login_required           # decorators that modifies function follows
+def analyze():
        interface = netifaces.interfaces()
        form = If_form();
        print(request.url)
@@ -42,7 +46,6 @@ def index():
        ifconfig = subprocess.check_output(['ifconfig'])
 
        return render_template('interface.html', form = form, ifconfig = ifconfig)
-       
 
 def cicflowmeter(start,interface):
     global pid
@@ -56,11 +59,12 @@ def cicflowmeter(start,interface):
     elif not start:        
         os.kill(pid, signal.SIGSTOP)
         
+        
 
 
 
 @app.route('/start',methods=['POST','GET'])
-@login_required           # decorators that modifies function follows
+#@login_required           # decorators that modifies function follows
 def start():
         form = If_form();      
         cicflowmeter(True,form.interface.data)
@@ -71,7 +75,7 @@ def start():
 
 
 @app.route('/ip', methods=['GET'])
-@login_required
+#@login_required
 def ip():
     ip = request.args.get('ip')
     if request.method == 'GET':
@@ -82,14 +86,14 @@ def ip():
 
 
 @app.route('/newInterface')
-@login_required
+#@login_required
 def newInterface():
     cicflowmeter(False,None)
-    return redirect(url_for('index'))
+    return redirect(url_for('analyze'))
 
 
 @app.route('/stop')
-@login_required
+#@login_required
 def stop():
     cicflowmeter(False,None)
     print("Stooooooooooooooop")
@@ -100,7 +104,7 @@ def stop():
 model = pickle.load(open(os.path.join(basedir, 'nids_model.pkl'),"rb"))
 
 @app.route('/testing')
-@login_required
+#@login_required
 def testing():
     benign = 0
     bot = 0
@@ -160,7 +164,7 @@ def testing():
 
 
 @app.route('/predict/', methods=['POST'])
-@login_required
+#@login_required
 def predict():
     req = request.get_json()
     df1 = pd.DataFrame(data=req["data"], columns=req["columns"] )
@@ -221,7 +225,7 @@ def login_page():
         if user and check_password_hash(user.password, password):
             login_user(user)
 
-            next_page = request.args.get('next') #необходим дебаг петли (register -> login -> register)
+            next_page = request.args.get('next') 
 
             return redirect(next_page)
         else:
@@ -255,10 +259,10 @@ def register():
 
 
 @app.route('/logout', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def logout():
     logout_user()
-    return redirect(url_for('index')) #or login_page
+    return redirect(url_for('login_page')) #or index
 
 
 @app.after_request
