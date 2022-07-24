@@ -71,3 +71,27 @@ postgres-# alter role siast_user set default_transaction_isolation TO 'read comm
 postgres-# alter role siast_user set timezone to 'UTC'
 postgres-# grant all privileges on database SIAST_USERS to siast_user
 ```
+
+## Deploy to web:
+* NGINX (Reverse-Proxy)
+```sh
+sudo apt install nginx
+sudo nano /etc/nginx/sites-enabled/flask_app
+```
+Paste to flask_app this:
+```sh
+server{
+    listen 80;
+
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+```
+```sh
+sudo unlink /etc/nginx/sites-enabled/default
+sudo nginx -t (might be successful)
+```
+* GUNICORN (Web Server)
