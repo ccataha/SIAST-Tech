@@ -97,7 +97,7 @@ def newInterface():
 def stop():
     cicflowmeter(False,None)
     print("Stooooooooooooooop")
-    return ('', 204)
+    return redirect(url_for('home'))
 
 
 #De-Serializing Model
@@ -261,7 +261,7 @@ def register():
 @app.route('/logout', methods=['GET', 'POST'])
 #@login_required
 def logout():
-    logout_user()
+    logout_user() 
     return redirect(url_for('login_page')) #or index
 
 

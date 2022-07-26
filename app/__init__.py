@@ -16,9 +16,9 @@ app.config.from_object(Config)
 app.register_blueprint(sse, url_prefix='/stream')
 
 
-
 from app import models, routes
 
 db.create_all()
+
 
 

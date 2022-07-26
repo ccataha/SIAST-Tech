@@ -93,5 +93,13 @@ server{
 ```sh
 sudo unlink /etc/nginx/sites-enabled/default
 sudo nginx -t (might be successful)
+sudo nginx -s reload
 ```
-* GUNICORN (Web Server)
+* GUNICORN (Web Server for load balancing)
+```
+(venv) root@viablecats:/home/miko/SIAST-Tech# gunicorn --bind 0.0.0.0:5000 --user root --workers=4 nids:app
+gunicorn --timeout 120 --user root --workers=4 nids:app
+gunicorn -w 2 -b 127.0.0.1:8000 --worker-class eventlet --threads 4 nids:app
+gunicorn -w 2 -b 127.0.0.1:8000 --worker-class eventlet --threads 4 --timeout 0 nids:app
+
+```
