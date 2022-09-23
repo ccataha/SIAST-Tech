@@ -5,20 +5,27 @@
 {% endblock active_dashboard %}
 
 {% block content %}
-
+<div class="page-loader-wrapper">
+    <div class="loader">
+        <div class="m-t-30"><img class="zmdi-hc-spin" src="{{ url_for('static', filename='ExAsset/images/logo.svg') }}" width="48" height="48" alt="InfiniO"></div>
+        <p>Пожалуйста, подождите...</p>        
+    </div>
+</div>
+<!-- Overlay For Sidebars -->
+<div class="overlay"></div>
 <section class="content">
     <div class="container">
         <div class="row clearfix">
-            <div class="col-lg-12">
+            <div class="col-lg-12"> 
                 <div class="card">
                     <div class="body block-header">
                         <div class="row">
-                            <div class="col-lg-6 col-md-8 col-sm-12">
-                                <h2>Тестирование модели на тестовом наборе данных  </h2>
+                            <div class="col-lg-6 col-md-8 col-sm-12 text-center">
+                                <h2>Тестирование KNN нейросети для мультиклассовой классификации</h2>
                                                          
                             </div>
                             <div class="col-lg-6 col-md-4 col-sm-12 text-right">
-                                <a href="{{ url_for('index') }}"> <button class="btn btn-outline-light btn-lg px-5" type="submit">Выбрать интерфейс</button> </a>
+                                <a href="{{ url_for('analyze') }}"> <button class="btn btn-outline-light btn-lg px-5" type="submit">Выбрать интерфейс</button> </a>
                             </div>  
                         </div>
                     </div>
@@ -26,8 +33,7 @@
             </div>
         </div>
         <!-- Basic Examples -->
-        
-
+       
 
         <div class="row clearfix">
             <div class="col-lg-4 col-md-4 col-sm-12 text-center">
@@ -36,7 +42,7 @@
                         <h2 class="number count-to m-t-0 m-b-5" data-from="0" data-to="{{result.accuracy}}" data-speed="1000" data-fresh-interval="700">{{ result.accuracy }}</h2>
                         <p class="text-muted">Accuracy</p>                        
                     </div>
-                    <span id="linecustom1">1,1,1,1,1,1,1,1,1,1</span>
+                    <span id="linecustom1">0,{{ result.accuracy }}</span>
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12 text-center">
@@ -45,7 +51,7 @@
                         <h2 class="number count-to m-t-0 m-b-5" data-from="0" data-to="{{result.total}}" data-speed="2000" data-fresh-interval="700">{{ result.total }}</h2>
                         <p class="text-muted ">Total flows</p>                        
                     </div>
-                    <span id="linecustom2">2,1,1,1,1,1,1,1,1,1</span>
+                    <span id="linecustom2">0,{{ result.total}}</span>
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12 text-center">
@@ -54,7 +60,7 @@
                         <h2 class="number count-to m-t-0 m-b-5" data-from="0" data-to="{{result.benign}}" data-speed="2000" data-fresh-interval="700">{{result.benign}}</h2>
                         <p class="text-muted">Benign</p>                        
                     </div>
-                    <span id="linecustom3">3,1,1,1,1,1,1,1,1,1</span>
+                    <span id="linecustom3">0, {{result.benign}}</span>
                 </div>
             </div>
 
@@ -64,7 +70,7 @@
                         <h2 class="number count-to m-t-0 m-b-5" data-from="0" data-to="{{result.bot}}" data-speed="2000" data-fresh-interval="700">{{result.bot}}</h2>
                         <p class="text-muted">Bot</p>                        
                     </div>
-                    <span id="linecustom5" >4,1,1,1,1,1,1,1,1,1</span>
+                    <span id="linecustom5" >0, {{result.bot}}</span>
                 </div>
             </div>
 
@@ -74,7 +80,7 @@
                         <h2 class="number count-to m-t-0 m-b-5" data-from="0" data-to="{{result.ddos}}" data-speed="2000" data-fresh-interval="700">{{result.ddos}}</h2>
                         <p class="text-muted">DDoS</p>                        
                     </div>
-                    <span id="linecustom4" >5,1,1,1,1,1,1,1,1,1</span>
+                    <span id="linecustom4" >0, {{result.ddos}}</span>
                 </div>
             </div>
 
@@ -84,7 +90,7 @@
                         <h2 class="number count-to m-t-0 m-b-5" data-from="0" data-to="{{result.infliteration}}" data-speed="2000" data-fresh-interval="700">{{result.infliteration}}</h2>
                         <p class="text-muted">Infliteration</p>                        
                     </div>
-                    <span id="linecustom6" >6,1,1,1,1,1,1,1,1,1</span>
+                    <span id="linecustom6" >0, {{result.infliteration}}</span>
                 </div>
             </div>
 
@@ -94,7 +100,7 @@
                         <h2 class="number count-to m-t-0 m-b-5" data-from="0" data-to="{{result.bruteforce}}" data-speed="2000" data-fresh-interval="700">{{result.bruteforce}}</h2>
                         <p class="text-muted">Brute Force</p>                        
                     </div>
-                    <span id="linecustom9" >7,1,1,1,1,1,1,1,1,1</span>
+                    <span id="linecustom9" >0, {{result.bruteforce}}</span>
                 </div>
             </div>
 
@@ -104,7 +110,7 @@
                         <h2 class="number count-to m-t-0 m-b-5" data-from="0" data-to="{{result.sqlInjection}}" data-speed="2000" data-fresh-interval="700">{{result.sqlInjection}}</h2>
                         <p class="text-muted">SQL Injection</p>                        
                     </div>
-                    <span id="linecustom7" >8,1,1,1,1,1,1,1,1,1</span>
+                    <span id="linecustom7" >0, {{result.sqlInjection}}</span>
                 </div>
             </div>
 
@@ -114,28 +120,68 @@
                         <h2 class="number count-to m-t-0 m-b-5" data-from="0" data-to="{{result.xss}}" data-speed="2000" data-fresh-interval="700">{{result.xss}}</h2>
                         <p class="text-muted">XSS</p>                        
                     </div>
-                    <span id="linecustom8" >9,1,1,1,1,1,1,1,1,1</span>
+                    <span id="linecustom8" >0, {{result.xss}}</span>
                 </div>
             </div>
-
         </div>
-
         
-
-            
-           
-
-            
-
-
-            
-           
+            <div class="row clearfix">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="body block-header">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-8 col-sm-12 text-center">
+                                    <h2>Тестирование нейросети LSTM для бинарной классификации  </h2>
+                                                             
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         
+            <div class="row clearfix">
+                <div class="col-lg-4 col-md-4 col-sm-12 text-center">
+                    <div class="card overflowhidden">
+                        <div class="body">
+                            <h2 class="number count-to m-t-0 m-b-5" data-from="0" data-to="{{result.accuracy_bin}}" data-speed="2000" data-fresh-interval="700">{{ result.accuracy_bin }}</h2>
+                            <p class="text-muted">Binary Accuracy</p>                        
+                        </div>
+                        <span id="linecustom10">0, {{ result.accuracy_bin }}</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 text-center">
+                    <div class="card overflowhidden">
+                        <div class="body">
+                            <h2 class="number count-to m-t-0 m-b-5" data-from="0" data-to="{{result.total_bin}}" data-speed="2000" data-fresh-interval="700">{{ result.total_bin }}</h2>
+                            <p class="text-muted ">Total flows</p>                        
+                        </div>
+                        <span id="linecustom11">0, {{ result.total_bin }}</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 text-center">
+                    <div class="card overflowhidden">
+                        <div class="body">
+                            <h2 class="number count-to m-t-0 m-b-5" data-from="0" data-to="{{result.benign_bin}}" data-speed="2000" data-fresh-interval="700">{{result.benign_bin}}</h2>
+                            <p class="text-muted">Benign</p>                        
+                        </div>
+                        <span id="linecustom12">0, {{result.benign_bin}}</span>
+                    </div>
+                </div>
+    
+                <div class="col-lg-4 col-md-4 col-sm-12 text-center">
+                    <div class="card overflowhidden">
+                        <div class="body">
+                            <h2 class="number count-to m-t-0 m-b-5" data-from="0" data-to="{{result.attack_bin}}" data-speed="2000" data-fresh-interval="700">{{result.attack_bin}}</h2>
+                            <p class="text-muted">Attack</p>                        
+                        </div>
+                        <span id="linecustom13" >0, {{result.attack_bin}}</span>
+                    </div>
+                </div>
+            </div>
         </div>        
-  
         <!-- #END# Basic Examples --> 
     </div>
+  <!-- #END# Basic Examples -->   
 </section>
-
-
-
 {% endblock content %}

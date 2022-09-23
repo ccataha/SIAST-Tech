@@ -1,3 +1,5 @@
+from distutils import core
+from unittest import result
 from flask import render_template, flash, redirect, url_for, request, session,  Response
 from flask import request, json, jsonify, Response 
 
@@ -5,7 +7,11 @@ from flask_login import login_user, login_required, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from sklearn import metrics
+from sklearn.preprocessing import MinMaxScaler
 from flask_sse import sse
+
+from tensorflow.keras.models import Sequential, Model
+
 import psutil
 import netifaces
 import json
@@ -24,7 +30,7 @@ resp = {}
 pid = None
 interface = ''
 basedir = os.path.abspath(os.path.dirname(__file__))
-
+core_resources = os.path.join(os.path.dirname(basedir), 'core_resources')
 
 
 
@@ -102,6 +108,8 @@ def stop():
 
 #De-Serializing Model
 model = pickle.load(open(os.path.join(basedir, 'nids_model.pkl'),"rb"))
+model_bin = pickle.load(open(os.path.join(core_resources, 'lstm.pkl'),"rb"))
+#model_multi = pickle.load(open(os.path.join(basedir, '~/SIAST-Tech/knn.pkl'),"rb"))
 
 @app.route('/testing')
 #@login_required
@@ -121,7 +129,7 @@ def testing():
     axis='columns', inplace=True)
     pred = model.predict(df)    
     # (unique, counts) = np.unique(pred, return_counts=True)
-    accuracy = metrics.accuracy_score(y_test["0"].values.reshape(-1, 1),pred)
+    accuracy = metrics.accuracy_score(y_test["0"].values.reshape(-1, 1), pred)
 
     for x in pred:
         total += 1
@@ -144,23 +152,78 @@ def testing():
 
     accuracy = accuracy*100
 
+#-----------------------------------------------------------------------------------------------------------------------------
+    benign_bin = 0
+    attack_bin = 0
+    total_bin = 0
+    data_bin = []
+    target_bin = []
+    file = pd.read_csv(os.path.join(core_resources, 'test_x_smt.csv'));
+    for n, i in file.iterrows():
+        a = []
+        for j in i[:-1]:
+            a.append(j)
+        data_bin.append(a)
+        target_bin.append(0 if i[-1] == 'BENIGN' else 1) #0 benign 1 attack
+    del file
+    data_bin = np.array(data_bin)
+    target_bin = np.array(target_bin)
+    print(data_bin.shape, target_bin.shape)
+    #scaler = MinMaxScaler(feature_range=(-1,1))
+    #scaler.fit(np.nan_to_num(data_bin).astype(float))
+    #data_bin = scaler.transform(np.nan_to_num(data_bin).astype(float))
+    scaler = MinMaxScaler(feature_range=(-1,1))
+    scaler.fit(np.nan_to_num(data_bin).astype(float))
+    data_bin = scaler.transform(np.nan_to_num(data_bin).astype(float))
+    data_bin = data_bin.reshape(data_bin.shape[0], data_bin.shape[1], 1)
+
+    #df.drop('Unnamed: 0',
+    #axis='columns', inplace=True)
+    pred_bin = model_bin.predict(data_bin)    
+    # (unique, counts) = np.unique(pred, return_counts=True)
+    pred_bin = np.argmax(pred_bin, axis=1)
+    accuracy_bin = metrics.accuracy_score(target_bin, pred_bin)
+    
+    for x in pred_bin:
+        total_bin += 1
+        if x == 0:
+            benign_bin += 1
+        elif x == 1:
+            attack_bin += 1          
+
+    accuracy_bin =  accuracy_bin*100
+
     result = {"accuracy" : accuracy,
                 "benign": benign, "bot" : bot, "total" : total,
                 "ddos":ddos,"infliteration": infliteration,
-                "portscan" : portScan,"bruteforce": bruteForce,"sqlInjection":sqlInjection,"xss":xss}
+                "portscan" : portScan,"bruteforce": bruteForce,"sqlInjection":sqlInjection,"xss":xss,
+                "accuracy_bin" : accuracy_bin, "benign_bin": benign_bin, "attack_bin" : attack_bin, "total_bin" : total_bin}
 
     print(result)
+    return render_template('testing.html', result=result)
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
     # pred_labels = pd.Series(pred).to_json(orient='values')
     # print(type(pred_labels))
     # for x in pred:
-  
     # print(result)
     # sse.publish(result, type='greeting')
-
-   
     # frequencies = np.asarray((unique, counts)).T
+    #return render_template('testing.html', result = result)
 
-    return render_template('testing.html', result = result)
+
+
 
 
 @app.route('/predict/', methods=['POST'])

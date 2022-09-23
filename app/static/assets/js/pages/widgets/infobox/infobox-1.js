@@ -139,4 +139,46 @@ function initCharts() {
         spotColor: '#e0b89d',
         spotRadius: 0
     });
+
+    $('#linecustom10').sparkline('html',{
+        height: '55px',
+        width: '100%',
+        lineColor: '#75c3f2',
+        fillColor: '#75c3f2',
+        minSpotColor: true,
+        maxSpotColor: true,
+        spotColor: '#8dbfe0',
+        spotRadius: 0
+    });
+    $('#linecustom11').sparkline('html',{
+        height: '55px',
+        width: '100%',
+        lineColor: '#fc7b92',
+        fillColor: '#fc7b92',
+        minSpotColor: true,
+        maxSpotColor: true,
+        spotColor: '#e0b89d',
+        spotRadius: 0
+    });
+    $('#linecustom12').sparkline('html',{
+        height: '55px',
+        width: '100%',
+        lineColor: '#75c3f2',
+        fillColor: '#75c3f2',
+        minSpotColor: true,
+        maxSpotColor: true,
+        spotColor: '#8dbfe0',
+        spotRadius: 0
+    });
+    $('#linecustom13').sparkline('html',{
+        height: '55px',
+        width: '100%',
+        lineColor: '#a095e5',
+        fillColor: '#a095e5',
+        minSpotColor: true,
+        maxSpotColor: true,
+        spotColor: '#e2a8df',
+        spotRadius: 0
+    });
+
 }
