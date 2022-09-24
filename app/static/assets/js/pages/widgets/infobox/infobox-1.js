@@ -7,7 +7,7 @@
 function initCounters() {
     $('.count-to').countTo();
 }
-
+// #C252E1 Medium orchid #E0D9F6 Lavender white #586AE2 Royal Blue #6ECBF5 Light Sky Blue #2A2356 Midnight Blue
 //Charts
 function initCharts() {
     //Chart Bar
@@ -25,7 +25,15 @@ function initCharts() {
         height: '50px',
         sliceColors: ['#fb4364', '#3aaaec', '#7868da', '#313037']
     });
-
+    
+    var COLORS = { 
+        Orchid: "#c252e1",  
+        Lavenderwhite: "#e0d9f6",  
+        RoyalBlue: "#586ae2", 
+        SkyBlue: "#6ecbf5", 
+        MidnightBlue: "#2a2356" 
+    };
+    
     //Chart Line
     $('.chart.chart-line').sparkline(undefined, {
         type: 'line',
@@ -44,141 +52,200 @@ function initCharts() {
     $('#linecustom1').sparkline('html',{
         height: '55px',
         width: '100%',
-        lineColor: '#a095e5',
-        fillColor: '#a095e5',
+        lineColor: COLORS.Orchid,
+        fillColor: COLORS.Orchid,
         minSpotColor: true,
         maxSpotColor: true,
-        spotColor: '#e2a8df',
+        spotColor: COLORS.Orchid,
         spotRadius: 0
     });
 
     $('#linecustom2').sparkline('html',{
         height: '55px',
         width: '100%',
-        lineColor: '#75c3f2',
-        fillColor: '#75c3f2',
+        lineColor: COLORS.RoyalBlue,
+        fillColor: COLORS.RoyalBlue,
         minSpotColor: true,
         maxSpotColor: true,
-        spotColor: '#8dbfe0',
+        spotColor: COLORS.RoyalBlue,
         spotRadius: 0
     });
 
     $('#linecustom3').sparkline('html',{	
         height: '55px',
         width: '100%',
-        lineColor: '#fc7b92',
-        fillColor: '#fc7b92',
+        lineColor: COLORS.SkyBlue,
+        fillColor: COLORS.SkyBlue,
         minSpotColor: true,
         maxSpotColor: true,
-        spotColor: '#e0b89d',
+        spotColor: COLORS.SkyBlue,
         spotRadius: 0
     });
 
     $('#linecustom4').sparkline('html',{
         height: '55px',
         width: '100%',
-        lineColor: '#a095e5',
-        fillColor: '#a095e5',
+        lineColor: COLORS.MidnightBlue,
+        fillColor: COLORS.MidnightBlue,
         minSpotColor: true,
         maxSpotColor: true,
-        spotColor: '#e2a8df',
+        spotColor: COLORS.MidnightBlue,
         spotRadius: 0
     });
 
-    $('#linecustom6').sparkline('html',{
+    $('#linecustom5').sparkline('html',{
         height: '55px',
         width: '100%',
-        lineColor: '#75c3f2',
-        fillColor: '#75c3f2',
+        lineColor: COLORS.Orchid,
+        fillColor: COLORS.Orchid,
         minSpotColor: true,
         maxSpotColor: true,
-        spotColor: '#8dbfe0',
+        spotColor: COLORS.Orchid,
         spotRadius: 0
     });
 
-    $('#linecustom5').sparkline('html',{	
+    $('#linecustom6').sparkline('html',{	
         height: '55px',
         width: '100%',
-        lineColor: '#fc7b92',
-        fillColor: '#fc7b92',
+        lineColor: COLORS.RoyalBlue,
+        fillColor: COLORS.RoyalBlue,
         minSpotColor: true,
         maxSpotColor: true,
-        spotColor: '#e0b89d',
+        spotColor: COLORS.RoyalBlue,
+        spotRadius: 0
+    });
+
+    $('#linecustom7').sparkline('html',{
+        height: '55px',
+        width: '100%',
+        lineColor: COLORS.SkyBlue,
+        fillColor: COLORS.SkyBlue,
+        minSpotColor: true,
+        maxSpotColor: true,
+        spotColor: COLORS.SkyBlue,
         spotRadius: 0
     });
 
     $('#linecustom8').sparkline('html',{
         height: '55px',
         width: '100%',
-        lineColor: '#a095e5',
-        fillColor: '#a095e5',
+        lineColor: COLORS.MidnightBlue,
+        fillColor: COLORS.MidnightBlue,
         minSpotColor: true,
         maxSpotColor: true,
-        spotColor: '#e2a8df',
+        spotColor: COLORS.MidnightBlue,
         spotRadius: 0
     });
 
-    $('#linecustom9').sparkline('html',{
+    $('#linecustom9').sparkline('html',{	
         height: '55px',
         width: '100%',
-        lineColor: '#75c3f2',
-        fillColor: '#75c3f2',
+        lineColor: COLORS.Orchid,
+        fillColor: COLORS.Orchid,
         minSpotColor: true,
         maxSpotColor: true,
-        spotColor: '#8dbfe0',
-        spotRadius: 0
-    });
-
-    $('#linecustom7').sparkline('html',{	
-        height: '55px',
-        width: '100%',
-        lineColor: '#fc7b92',
-        fillColor: '#fc7b92',
-        minSpotColor: true,
-        maxSpotColor: true,
-        spotColor: '#e0b89d',
+        spotColor: COLORS.Orchid,
         spotRadius: 0
     });
 
     $('#linecustom10').sparkline('html',{
         height: '55px',
         width: '100%',
-        lineColor: '#75c3f2',
-        fillColor: '#75c3f2',
+        lineColor: COLORS.RoyalBlue,
+        fillColor: COLORS.RoyalBlue,
         minSpotColor: true,
         maxSpotColor: true,
-        spotColor: '#8dbfe0',
+        spotColor: COLORS.RoyalBlue,
         spotRadius: 0
     });
     $('#linecustom11').sparkline('html',{
         height: '55px',
         width: '100%',
-        lineColor: '#fc7b92',
-        fillColor: '#fc7b92',
+        lineColor: COLORS.SkyBlue,
+        fillColor: COLORS.SkyBlue,
         minSpotColor: true,
         maxSpotColor: true,
-        spotColor: '#e0b89d',
+        spotColor: COLORS.SkyBlue,
         spotRadius: 0
     });
     $('#linecustom12').sparkline('html',{
         height: '55px',
         width: '100%',
-        lineColor: '#75c3f2',
-        fillColor: '#75c3f2',
+        lineColor: COLORS.MidnightBlue,
+        fillColor: COLORS.MidnightBlue,
         minSpotColor: true,
         maxSpotColor: true,
-        spotColor: '#8dbfe0',
+        spotColor: COLORS.MidnightBlue,
         spotRadius: 0
     });
     $('#linecustom13').sparkline('html',{
         height: '55px',
         width: '100%',
-        lineColor: '#a095e5',
-        fillColor: '#a095e5',
+        lineColor: COLORS.Orchid,
+        fillColor: COLORS.Orchid,
         minSpotColor: true,
         maxSpotColor: true,
-        spotColor: '#e2a8df',
+        spotColor: COLORS.Orchid,
         spotRadius: 0
     });
-
+    $('#linecustom14').sparkline('html',{
+        height: '55px',
+        width: '100%',
+        lineColor: COLORS.RoyalBlue,
+        fillColor: COLORS.RoyalBlue,
+        minSpotColor: true,
+        maxSpotColor: true,
+        spotColor: COLORS.RoyalBlue,
+        spotRadius: 0
+    });
+    $('#linecustom15').sparkline('html',{
+        height: '55px',
+        width: '100%',
+        lineColor: COLORS.SkyBlue,
+        fillColor: COLORS.SkyBlue,
+        minSpotColor: true,
+        maxSpotColor: true,
+        spotColor: COLORS.SkyBlue,
+        spotRadius: 0
+    });
+    $('#linecustom16').sparkline('html',{
+        height: '55px',
+        width: '100%',
+        lineColor: COLORS.MidnightBlue,
+        fillColor: COLORS.MidnightBlue,
+        minSpotColor: true,
+        maxSpotColor: true,
+        spotColor: COLORS.MidnightBlue,
+        spotRadius: 0
+    });
+    $('#linecustom17').sparkline('html',{
+        height: '55px',
+        width: '100%',
+        lineColor: COLORS.Orchid,
+        fillColor: COLORS.Orchid,
+        minSpotColor: true,
+        maxSpotColor: true,
+        spotColor: COLORS.Orchid,
+        spotRadius: 0
+    });
+    $('#linecustom18').sparkline('html',{
+        height: '55px',
+        width: '100%',
+        lineColor: COLORS.RoyalBlue,
+        fillColor: COLORS.RoyalBlue,
+        minSpotColor: true,
+        maxSpotColor: true,
+        spotColor: COLORS.RoyalBlue,
+        spotRadius: 0
+    });
+    $('#linecustom19').sparkline('html',{
+        height: '55px',
+        width: '100%',
+        lineColor: COLORS.SkyBlue,
+        fillColor: COLORS.SkyBlue,
+        minSpotColor: true,
+        maxSpotColor: true,
+        spotColor: COLORS.SkyBlue,
+        spotRadius: 0
+    });
 }

@@ -109,48 +109,83 @@ def stop():
 #De-Serializing Model
 model = pickle.load(open(os.path.join(basedir, 'nids_model.pkl'),"rb"))
 model_bin = pickle.load(open(os.path.join(core_resources, 'lstm.pkl'),"rb"))
-#model_multi = pickle.load(open(os.path.join(basedir, '~/SIAST-Tech/knn.pkl'),"rb"))
+model_multi = pickle.load(open(os.path.join(core_resources, 'knn.pkl'),"rb"))
 
 @app.route('/testing')
 #@login_required
 def testing():
-    benign = 0
-    bot = 0
-    ddos = 0
-    portScan = 0
-    infliteration = 0
-    bruteForce = 0
-    sqlInjection = 0
-    xss = 0
-    total = 0
-    df = pd.read_csv(os.path.join(basedir, 'smt_X_Test.csv'));
-    y_test = pd.read_csv(os.path.join(basedir, 'smt_y_Test.csv'));
-    df.drop('Unnamed: 0',
-    axis='columns', inplace=True)
-    pred = model.predict(df)    
-    # (unique, counts) = np.unique(pred, return_counts=True)
-    accuracy = metrics.accuracy_score(y_test["0"].values.reshape(-1, 1), pred)
-
-    for x in pred:
-        total += 1
+    total_multi = 0 
+    DDoS_multi = 0 
+    DoSGoldenEye_multi = 0           
+    DosHulk_multi = 0 
+    DoSSlowhttptest_multi = 0 
+    DoSSlowloris_multi = 0 
+    FTPPataor_multi = 0 
+    Heartbleed_multi = 0 
+    Infiltration_multi = 0 
+    PortScan_multi = 0 
+    SSHPatator_multi = 0 
+    BruteForce_multi = 0 
+    SQLInjection_multi = 0 
+    Xss_multi = 0 
+    Benign_multi = 0 
+    file = pd.read_csv(os.path.join(core_resources, 'test_x_smt.csv'));
+    data_multi = []
+    target_multi = []
+    last_multi = []
+    for n, i in file.iterrows():
+        if not i[-1] in last_multi:
+            last_multi.append(i[-1])
+        if last_multi.index(i[-1]) != 0: #проверка бенингн или нет для записи в набор data 
+            a = []
+            for j in i[:-1]:
+                a.append(j)
+            data_multi.append(a)
+            target_multi.append(last_multi.index(i[-1])-1)
+    del file
+    del last_multi[0]
+    data_multi = np.array(data_multi)
+    target_multi = np.array(target_multi)
+    print(data_multi.shape, target_multi.shape)
+    scaler = MinMaxScaler(feature_range=(-1,1))
+    scaler.fit(np.nan_to_num(data_multi).astype(float))
+    data_multi = scaler.transform(np.nan_to_num(data_multi).astype(float))
+    data_multi = data_multi.reshape(data_multi.shape[0], data_multi.shape[1], 1)
+    pred_multi = model_multi.predict(data_multi)    
+    pred_multi = np.argmax(pred_multi, axis=1)
+    accuracy_multi = metrics.accuracy_score(target_multi, pred_multi)
+    for x in pred_multi:
+        total_multi += 1
         if x == 0:
-            benign += 1
+            DDoS_multi += 1
         elif x == 1:
-            bot += 1          
+            DoSGoldenEye_multi += 1          
         elif x == 2:
-            ddos += 1
+            DosHulk_multi += 1
         elif x == 3:
-            infliteration += 1
+            DoSSlowhttptest_multi += 1
         elif x == 4:
-            portScan += 1
+            DoSSlowloris_multi += 1
         elif x == 5:
-            bruteForce += 1
+            FTPPataor_multi += 1
         elif x == 6:
-            sqlInjection += 1
+            Heartbleed_multi += 1
         elif x == 7:
-            xss += 1
+            Infiltration_multi += 1
+        elif x == 8:
+            PortScan_multi += 1
+        elif x == 9:
+            SSHPatator_multi += 1
+        elif x == 10:
+            BruteForce_multi += 1
+        elif x == 11:
+            SQLInjection_multi +=1
+        elif x == 12:
+            Xss_multi += 1
+        elif x == 13:
+            Benign_multi =+ 1  
 
-    accuracy = accuracy*100
+    accuracy_multi =  accuracy_multi*100
 
 #-----------------------------------------------------------------------------------------------------------------------------
     benign_bin = 0
@@ -172,11 +207,12 @@ def testing():
     #scaler = MinMaxScaler(feature_range=(-1,1))
     #scaler.fit(np.nan_to_num(data_bin).astype(float))
     #data_bin = scaler.transform(np.nan_to_num(data_bin).astype(float))
+    #scaler = MinMaxScaler(feature_range=(-1,1))
+    #scaler.fit(np.nan_to_num(data_bin).astype(float))
     scaler = MinMaxScaler(feature_range=(-1,1))
     scaler.fit(np.nan_to_num(data_bin).astype(float))
     data_bin = scaler.transform(np.nan_to_num(data_bin).astype(float))
     data_bin = data_bin.reshape(data_bin.shape[0], data_bin.shape[1], 1)
-
     #df.drop('Unnamed: 0',
     #axis='columns', inplace=True)
     pred_bin = model_bin.predict(data_bin)    
@@ -193,38 +229,17 @@ def testing():
 
     accuracy_bin =  accuracy_bin*100
 
-    result = {"accuracy" : accuracy,
-                "benign": benign, "bot" : bot, "total" : total,
-                "ddos":ddos,"infliteration": infliteration,
-                "portscan" : portScan,"bruteforce": bruteForce,"sqlInjection":sqlInjection,"xss":xss,
+    result = {"accuracy_multi" : accuracy_multi,
+                "Benign_multi": Benign_multi, "total_multi": total_multi, "DDoS_multi": DDoS_multi,
+                "DoSGoldenEye_multi": DoSGoldenEye_multi, "DosHulk_multi": DosHulk_multi, "DoSSlowhttptest_multi": DoSSlowhttptest_multi,
+                "DoSSlowloris_multi": DoSSlowloris_multi, "FTPPataor_multi": FTPPataor_multi, "Heartbleed_multi": Heartbleed_multi,
+                "Infiltration_multi": Infiltration_multi, "PortScan_multi": PortScan_multi, "SSHPatator_multi": SSHPatator_multi,
+                "BruteForce_multi": BruteForce_multi, "SQLInjection_multi": SQLInjection_multi, "Xss_multi": Xss_multi, 
                 "accuracy_bin" : accuracy_bin, "benign_bin": benign_bin, "attack_bin" : attack_bin, "total_bin" : total_bin}
 
     print(result)
     return render_template('testing.html', result=result)
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-    # pred_labels = pd.Series(pred).to_json(orient='values')
-    # print(type(pred_labels))
-    # for x in pred:
-    # print(result)
-    # sse.publish(result, type='greeting')
-    # frequencies = np.asarray((unique, counts)).T
-    #return render_template('testing.html', result = result)
-
-
-
-
 
 @app.route('/predict/', methods=['POST'])
 #@login_required
