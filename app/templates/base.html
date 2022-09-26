@@ -71,11 +71,11 @@
 <script src="{{ url_for('static', filename='assets/bundles/datatablescripts.bundle.js') }}"></script>
 <script src="{{ url_for('static', filename='assets/js/pages/tables/jquery-datatable.js') }}"></script>
 <script src="{{ url_for('static', filename='assets/js/pages/widgets/infobox/infobox-1.js') }}"></script>
-
+<script src="{{ url_for('static', filename='assets/js/pages/widgets/infobox/Chart.bundle.min.js') }}"></script> <!--pie chart-->
 
 <script type="text/javascript">
     var source = new EventSource("{{ url_for('sse.stream') }}");
-    var flow = 0;
+    var flow = 0
     var benign = 0
     var attack = 0
     source.addEventListener('greeting', function(event) {
@@ -121,6 +121,56 @@
         });
 
     }
-    </script> 
+</script> 
+<script>
+    $(document).ready(function() {
+                var ctx = $("#chart-line");
+                var myLineChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: ["Types", "Summer", "Fall", "Winter"],
+                        datasets: [{
+                            data: ["{{result.total_multi}}", 1700, 800, 200],
+                            backgroundColor: ["#0c1e3e", "#38fbdb", "#fc0ff5", "#8e52f5"]
+                        }]
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                            text: 'Типы атак',
+                        }
+                    }
+                });
+                var ctx = $("#chart-bar");
+                var colors = ['#0c1e3e','#38fbdb'];
+                var myLineChart = new Chart(ctx, {
+                    type: 'bar',
+				data: {
+					labels: ["S", "M", "T", "W", "T", "F", "S"],
+					datasets: [{
+							data: [354, 445, 483, 503, 689, 692, 634],
+							backgroundColor: colors['0']
+						},
+						{
+							data: [123123, 465, 493, 478, 589, 632, 674],
+							backgroundColor: colors["1"]
+						}
+					]
+				},
+				options: {
+					legend: {
+						display: false
+					},
+					scales: {
+						xAxes: [{
+							barPercentage: 0.4,
+							categoryPercentage: 0.5
+						}]
+					}
+				}
+                });
+                
+            });
+</script>
 </body>
 </html>

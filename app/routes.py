@@ -10,7 +10,9 @@ from sklearn import metrics
 from sklearn.preprocessing import MinMaxScaler
 from flask_sse import sse
 
+from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.models import Sequential, Model
+
 
 import psutil
 import netifaces
@@ -31,7 +33,7 @@ pid = None
 interface = ''
 basedir = os.path.abspath(os.path.dirname(__file__))
 core_resources = os.path.join(os.path.dirname(basedir), 'core_resources')
-
+     
 
 
 
@@ -151,9 +153,12 @@ def testing():
     scaler.fit(np.nan_to_num(data_multi).astype(float))
     data_multi = scaler.transform(np.nan_to_num(data_multi).astype(float))
     data_multi = data_multi.reshape(data_multi.shape[0], data_multi.shape[1], 1)
-    pred_multi = model_multi.predict(data_multi)    
-    pred_multi = np.argmax(pred_multi, axis=1)
+    pred_multi_raw = model_multi.predict(data_multi)    
+    pred_multi = np.argmax(pred_multi_raw, axis=1)
     accuracy_multi = metrics.accuracy_score(target_multi, pred_multi)
+
+
+
     for x in pred_multi:
         total_multi += 1
         if x == 0:
@@ -186,7 +191,10 @@ def testing():
             Benign_multi =+ 1  
 
     accuracy_multi =  accuracy_multi*100
-
+    recall_multi = metrics.recall_score(target_multi, pred_multi, average="micro")
+    precision_multi = metrics.precision_score(target_multi, pred_multi, average="micro")
+    f1score_multi = metrics.f1_score(target_multi, pred_multi, average="micro")
+    roc_auc_multi = metrics.roc_auc_score(to_categorical(target_multi), np.nan_to_num(pred_multi_raw), multi_class='ovr')
 #-----------------------------------------------------------------------------------------------------------------------------
     benign_bin = 0
     attack_bin = 0
@@ -235,7 +243,8 @@ def testing():
                 "DoSSlowloris_multi": DoSSlowloris_multi, "FTPPataor_multi": FTPPataor_multi, "Heartbleed_multi": Heartbleed_multi,
                 "Infiltration_multi": Infiltration_multi, "PortScan_multi": PortScan_multi, "SSHPatator_multi": SSHPatator_multi,
                 "BruteForce_multi": BruteForce_multi, "SQLInjection_multi": SQLInjection_multi, "Xss_multi": Xss_multi, 
-                "accuracy_bin" : accuracy_bin, "benign_bin": benign_bin, "attack_bin" : attack_bin, "total_bin" : total_bin}
+                "accuracy_bin" : accuracy_bin, "benign_bin": benign_bin, "attack_bin" : attack_bin, "total_bin" : total_bin,
+                "recall_multi": recall_multi, "precision_multi": precision_multi, "f1score_multi": f1score_multi, "roc_auc_multi": roc_auc_multi}
 
     print(result)
     return render_template('testing.html', result=result)
