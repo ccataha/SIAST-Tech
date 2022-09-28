@@ -131,21 +131,14 @@ def testing():
     SQLInjection_multi = 0 
     Xss_multi = 0 
     Benign_multi = 0 
-    file = pd.read_csv(os.path.join(core_resources, 'test_x_smt.csv'));
-    data_multi = []
-    target_multi = []
-    last_multi = []
-    for n, i in file.iterrows():
-        if not i[-1] in last_multi:
-            last_multi.append(i[-1])
-        if last_multi.index(i[-1]) != 0: #проверка бенингн или нет для записи в набор data 
-            a = []
-            for j in i[:-1]:
-                a.append(j)
-            data_multi.append(a)
-            target_multi.append(last_multi.index(i[-1])-1)
-    del file
-    del last_multi[0]
+    Bot_multi = 0
+
+    file_bin = pd.read_csv(os.path.join(core_resources, 'test_x_smt.csv'));
+    file_bin = file_bin[file_bin.label != "BENIGN"] 
+    from sklearn.preprocessing import LabelEncoder
+    le = LabelEncoder()
+    target_multi = le.fit_transform(file_bin["label"])
+    data_multi = file_bin.drop("label", axis=1)
     data_multi = np.array(data_multi)
     target_multi = np.array(target_multi)
     print(data_multi.shape, target_multi.shape)

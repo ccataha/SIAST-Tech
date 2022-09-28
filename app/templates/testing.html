@@ -5,6 +5,56 @@
 {% endblock active_dashboard %}
 
 {% block content %}
+<script>
+     $(document).ready(function() {
+                var ctx = $("#chart-line");
+                var myLineChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: ["Benign", "Bot", "DoS/DDoS", "Infiltration", "BruteForce", "SQL Injection", "XSS", "HeartBleed", "PortScan"],
+                        datasets: [{
+                            data: [parseFloat("{{result.Benign_multi}}"), parseFloat("{{result.Benign_multi}}"), 800, 200],
+                            backgroundColor: ["#0c1e3e", "#38fbdb", "#fc0ff5", "#8e52f5"]
+                        }]
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                            text: 'Типы атак',
+                        }
+                    }
+                });
+                var ctx = $("#chart-bar");
+                var colors = ['#0c1e3e','#38fbdb'];
+                var myLineChart = new Chart(ctx, {
+                    type: 'bar',
+				data: {
+					labels: ["S", "M", "T", "W", "T", "F", "S"],
+					datasets: [{
+							data: [354, 445, 483, 503, 689, 692, 634],
+							backgroundColor: colors['0']
+						},
+						{
+							data: [123123, 465, 493, 478, 589, 632, 674],
+							backgroundColor: colors["1"]
+						}
+					]
+				},
+				options: {
+					legend: {
+						display: false
+					},
+					scales: {
+						xAxes: [{
+							barPercentage: 0.4,
+							categoryPercentage: 0.5
+						}]
+					}
+				}
+                });
+                
+            });
+</script>
 
 <!-- Overlay For Sidebars -->
 <div class="overlay"></div>
