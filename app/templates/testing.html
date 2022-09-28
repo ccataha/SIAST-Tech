@@ -10,11 +10,16 @@
                 var ctx = $("#chart-line");
                 var myLineChart = new Chart(ctx, {
                     type: 'pie',
-                    data: {
-                        labels: ["Benign", "Bot", "DoS/DDoS", "Infiltration", "BruteForce", "SQL Injection", "XSS", "HeartBleed", "PortScan"],
+                    data : {
+                        labels: ["DoS", "PortScan", "Bot", "Brute-Force", "Web Attack", "Infiltration"],
                         datasets: [{
-                            data: [parseFloat("{{result.Benign_multi}}"), parseFloat("{{result.Benign_multi}}"), 800, 200],
-                            backgroundColor: ["#0c1e3e", "#38fbdb", "#fc0ff5", "#8e52f5"]
+                            data: [parseFloat("{{result.DDoS_multi}}")+parseFloat("{{result.DoSGoldenEye_multi}}")+parseFloat("{{result.DoSSlowhttptest_multi}}")+parseFloat("{{result.DoSHulk_multi}}")+parseFloat("{{result.DoSSlowloris_multi}}")+parseFloat("{{result.Heartbleed_multi}}"), 
+                            parseFloat("{{result.PortScan_multi}}"), 
+                            parseFloat("{{result.Bot_multi}}"), 
+                            parseFloat("{{result.SSHPatator_multi}}")+parseFloat("{{result.FTPPatator_multi}}"), 
+                            parseFloat("{{result.BruteForce_multi}}")+parseFloat("{{result.Xss_multi}}")+parseFloat("{{result.SQLInjection_multi}}"), 
+                            parseFloat("{{result.Infiltration_multi}}")],
+                            backgroundColor: ["#0c1e3e", "#122c5a", "#38fbdb", "#fc0ff5", "#0c1b3e", "#38fb3b"]
                         }]
                     },
                     options: {
@@ -119,10 +124,10 @@
                     <div class="col-md-4 сol-lg-4 col-sm-12">
                         <div class="card overflowhidden">
                             <div class="body">
-                                <h2 class="number count-to m-t-0 m-b-5" data-from="0" data-to="{{result.Benign_multi}}" data-speed="2000" data-fresh-interval="700">{{result.Benign_multi}}</h2>
-                                <p class="text-muted">Benign</p>                        
+                                <h2 class="number count-to m-t-0 m-b-5" data-from="0" data-to="{{result.Bot_multi}}" data-speed="2000" data-fresh-interval="700">{{result.Bot_multi}}</h2>
+                                <p class="text-muted">Bot</p>                        
                             </div>
-                            <span id="linecustom3">0, {{result.Benign_multi}}</span>
+                            <span id="linecustom3">0, {{result.Bot_multi}}</span>
                         </div>
                     </div>
                 </div>
@@ -148,10 +153,10 @@
                     <div class="col-md-4 сol-lg-4 col-sm-12">
                         <div class="card overflowhidden">
                             <div class="body">
-                                <h2 class="number count-to m-t-0 m-b-5" data-from="0" data-to="{{result.DosHulk_multi}}" data-speed="2000" data-fresh-interval="700">{{result.DosHulk_multi}}</h2>
+                                <h2 class="number count-to m-t-0 m-b-5" data-from="0" data-to="{{result.DoSHulk_multi}}" data-speed="2000" data-fresh-interval="700">{{result.DoSHulk_multi}}</h2>
                                 <p class="text-muted">DoS Hulk </p>                        
                             </div>
-                            <span id="linecustom6" >0, {{result.DosHulk_multi}}</span>
+                            <span id="linecustom6" >0, {{result.DoSHulk_multi}}</span>
                         </div>
                     </div>
                 </div>
@@ -178,10 +183,10 @@
                     <div class="col-md-4 сol-lg-4 col-sm-12">
                         <div class="card overflowhidden">
                             <div class="body">
-                                <h2 class="number count-to m-t-0 m-b-5" data-from="0" data-to="{{FTPPataor_multi}}" data-speed="2000" data-fresh-interval="700">{{result.FTPPataor_multi}}</h2>
+                                <h2 class="number count-to m-t-0 m-b-5" data-from="0" data-to="{{result.FTPPatator_multi}}" data-speed="2000" data-fresh-interval="700">{{result.FTPPatator_multi}}</h2>
                                 <p class="text-muted">FTP-Patator</p>                        
                             </div>
-                            <span id="linecustom9" >0, {{result.FTPPataor_multi}}</span>
+                            <span id="linecustom9" >0, {{result.FTPPatator_multi}}</span>
                         </div>
                     </div>
                 </div>

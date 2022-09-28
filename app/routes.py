@@ -119,10 +119,10 @@ def testing():
     total_multi = 0 
     DDoS_multi = 0 
     DoSGoldenEye_multi = 0           
-    DosHulk_multi = 0 
+    DoSHulk_multi = 0 
     DoSSlowhttptest_multi = 0 
     DoSSlowloris_multi = 0 
-    FTPPataor_multi = 0 
+    FTPPatator_multi = 0 
     Heartbleed_multi = 0 
     Infiltration_multi = 0 
     PortScan_multi = 0 
@@ -130,7 +130,6 @@ def testing():
     BruteForce_multi = 0 
     SQLInjection_multi = 0 
     Xss_multi = 0 
-    Benign_multi = 0 
     Bot_multi = 0
 
     file_bin = pd.read_csv(os.path.join(core_resources, 'test_x_smt.csv'));
@@ -148,45 +147,42 @@ def testing():
     data_multi = data_multi.reshape(data_multi.shape[0], data_multi.shape[1], 1)
     pred_multi_raw = model_multi.predict(data_multi)    
     pred_multi = np.argmax(pred_multi_raw, axis=1)
-    accuracy_multi = metrics.accuracy_score(target_multi, pred_multi)
-
-
-
+    
     for x in pred_multi:
         total_multi += 1
         if x == 0:
-            DDoS_multi += 1
+            Bot_multi += 1
         elif x == 1:
-            DoSGoldenEye_multi += 1          
+            DDoS_multi += 1
         elif x == 2:
-            DosHulk_multi += 1
+            DoSGoldenEye_multi += 1          
         elif x == 3:
-            DoSSlowhttptest_multi += 1
+            DoSHulk_multi += 1
         elif x == 4:
-            DoSSlowloris_multi += 1
+            DoSSlowhttptest_multi += 1
         elif x == 5:
-            FTPPataor_multi += 1
+            DoSSlowloris_multi += 1
         elif x == 6:
-            Heartbleed_multi += 1
+            FTPPatator_multi += 1
         elif x == 7:
-            Infiltration_multi += 1
+            Heartbleed_multi += 1
         elif x == 8:
-            PortScan_multi += 1
+            Infiltration_multi += 1
         elif x == 9:
-            SSHPatator_multi += 1
+            PortScan_multi += 1
         elif x == 10:
-            BruteForce_multi += 1
+            SSHPatator_multi += 1
         elif x == 11:
-            SQLInjection_multi +=1
+            BruteForce_multi += 1
         elif x == 12:
-            Xss_multi += 1
+            SQLInjection_multi +=1
         elif x == 13:
-            Benign_multi =+ 1  
-
-    accuracy_multi =  accuracy_multi*100
-    recall_multi = metrics.recall_score(target_multi, pred_multi, average="micro")
-    precision_multi = metrics.precision_score(target_multi, pred_multi, average="micro")
-    f1score_multi = metrics.f1_score(target_multi, pred_multi, average="micro")
+            Xss_multi += 1
+ 
+    accuracy_multi = metrics.accuracy_score(target_multi, pred_multi)
+    recall_multi = metrics.recall_score(target_multi, pred_multi, average="weighted")
+    precision_multi = metrics.precision_score(target_multi, pred_multi, average="weighted")
+    f1score_multi = metrics.f1_score(target_multi, pred_multi, average="weighted")
     roc_auc_multi = metrics.roc_auc_score(to_categorical(target_multi), np.nan_to_num(pred_multi_raw), multi_class='ovr')
 #-----------------------------------------------------------------------------------------------------------------------------
     benign_bin = 0
@@ -219,7 +215,7 @@ def testing():
     pred_bin = model_bin.predict(data_bin)    
     # (unique, counts) = np.unique(pred, return_counts=True)
     pred_bin = np.argmax(pred_bin, axis=1)
-    accuracy_bin = metrics.accuracy_score(target_bin, pred_bin)
+    accuracy_bin = (metrics.accuracy_score(target_bin, pred_bin))*100
     
     for x in pred_bin:
         total_bin += 1
@@ -231,9 +227,9 @@ def testing():
     accuracy_bin =  accuracy_bin*100
 
     result = {"accuracy_multi" : accuracy_multi,
-                "Benign_multi": Benign_multi, "total_multi": total_multi, "DDoS_multi": DDoS_multi,
-                "DoSGoldenEye_multi": DoSGoldenEye_multi, "DosHulk_multi": DosHulk_multi, "DoSSlowhttptest_multi": DoSSlowhttptest_multi,
-                "DoSSlowloris_multi": DoSSlowloris_multi, "FTPPataor_multi": FTPPataor_multi, "Heartbleed_multi": Heartbleed_multi,
+                "Bot_multi": Bot_multi, "total_multi": total_multi, "DDoS_multi": DDoS_multi,
+                "DoSGoldenEye_multi": DoSGoldenEye_multi, "DoSHulk_multi": DoSHulk_multi, "DoSSlowhttptest_multi": DoSSlowhttptest_multi,
+                "DoSSlowloris_multi": DoSSlowloris_multi, "FTPPatator_multi": FTPPatator_multi, "Heartbleed_multi": Heartbleed_multi,
                 "Infiltration_multi": Infiltration_multi, "PortScan_multi": PortScan_multi, "SSHPatator_multi": SSHPatator_multi,
                 "BruteForce_multi": BruteForce_multi, "SQLInjection_multi": SQLInjection_multi, "Xss_multi": Xss_multi, 
                 "accuracy_bin" : accuracy_bin, "benign_bin": benign_bin, "attack_bin" : attack_bin, "total_bin" : total_bin,
