@@ -116,7 +116,7 @@ model_multi = pickle.load(open(os.path.join(core_resources, 'knn.pkl'),"rb"))
 @app.route('/testing')
 #@login_required
 def testing():
-    total_multi = 0 
+    Total_multi = 0 
     DDoS_multi = 0 
     DoSGoldenEye_multi = 0           
     DoSHulk_multi = 0 
@@ -149,7 +149,7 @@ def testing():
     pred_multi = np.argmax(pred_multi_raw, axis=1)
     
     for x in pred_multi:
-        total_multi += 1
+        Total_multi += 1
         if x == 0:
             Bot_multi += 1
         elif x == 1:
@@ -179,15 +179,15 @@ def testing():
         elif x == 13:
             Xss_multi += 1
  
-    accuracy_multi = metrics.accuracy_score(target_multi, pred_multi)
-    recall_multi = metrics.recall_score(target_multi, pred_multi, average="weighted")
-    precision_multi = metrics.precision_score(target_multi, pred_multi, average="weighted")
-    f1score_multi = metrics.f1_score(target_multi, pred_multi, average="weighted")
-    roc_auc_multi = metrics.roc_auc_score(to_categorical(target_multi), np.nan_to_num(pred_multi_raw), multi_class='ovr')
+    Accuracy_multi = metrics.accuracy_score(target_multi, pred_multi)
+    Recall_multi = metrics.recall_score(target_multi, pred_multi, average="weighted")
+    Precision_multi = metrics.precision_score(target_multi, pred_multi, average="weighted")
+    F1score_multi = metrics.f1_score(target_multi, pred_multi, average="weighted")
+    Roc_auc_multi = metrics.roc_auc_score(to_categorical(target_multi), np.nan_to_num(pred_multi_raw), multi_class='ovr')
 #-----------------------------------------------------------------------------------------------------------------------------
-    benign_bin = 0
-    attack_bin = 0
-    total_bin = 0
+    Benign_bin = 0
+    Attack_bin = 0
+    Total_bin = 0
     data_bin = []
     target_bin = []
     file = pd.read_csv(os.path.join(core_resources, 'test_x_smt.csv'));
@@ -215,25 +215,23 @@ def testing():
     pred_bin = model_bin.predict(data_bin)    
     # (unique, counts) = np.unique(pred, return_counts=True)
     pred_bin = np.argmax(pred_bin, axis=1)
-    accuracy_bin = (metrics.accuracy_score(target_bin, pred_bin))*100
+    Accuracy_bin = (metrics.accuracy_score(target_multi , pred_multi))
     
     for x in pred_bin:
-        total_bin += 1
+        Total_bin += 1
         if x == 0:
-            benign_bin += 1
+            Benign_bin += 1
         elif x == 1:
-            attack_bin += 1          
+            Attack_bin += 1          
 
-    accuracy_bin =  accuracy_bin*100
-
-    result = {"accuracy_multi" : accuracy_multi,
-                "Bot_multi": Bot_multi, "total_multi": total_multi, "DDoS_multi": DDoS_multi,
+    result = {"Accuracy_multi" : Accuracy_multi,
+                "Bot_multi": Bot_multi, "Total_multi": Total_multi, "DDoS_multi": DDoS_multi,
                 "DoSGoldenEye_multi": DoSGoldenEye_multi, "DoSHulk_multi": DoSHulk_multi, "DoSSlowhttptest_multi": DoSSlowhttptest_multi,
                 "DoSSlowloris_multi": DoSSlowloris_multi, "FTPPatator_multi": FTPPatator_multi, "Heartbleed_multi": Heartbleed_multi,
                 "Infiltration_multi": Infiltration_multi, "PortScan_multi": PortScan_multi, "SSHPatator_multi": SSHPatator_multi,
                 "BruteForce_multi": BruteForce_multi, "SQLInjection_multi": SQLInjection_multi, "Xss_multi": Xss_multi, 
-                "accuracy_bin" : accuracy_bin, "benign_bin": benign_bin, "attack_bin" : attack_bin, "total_bin" : total_bin,
-                "recall_multi": recall_multi, "precision_multi": precision_multi, "f1score_multi": f1score_multi, "roc_auc_multi": roc_auc_multi}
+                "Accuracy_bin" : Accuracy_bin, "Benign_bin": Benign_bin, "Attack_bin" : Attack_bin, "Total_bin" : Total_bin,
+                "Recall_multi": Recall_multi, "Precision_multi": Precision_multi, "F1score_multi": F1score_multi, "Roc_auc_multi": Roc_auc_multi}
 
     print(result)
     return render_template('testing.html', result=result)
