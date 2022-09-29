@@ -212,11 +212,14 @@ def testing():
     data_bin = data_bin.reshape(data_bin.shape[0], data_bin.shape[1], 1)
     #df.drop('Unnamed: 0',
     #axis='columns', inplace=True)
-    pred_bin = model_bin.predict(data_bin)    
+    pred_bin_raw = model_bin.predict(data_bin)    
     # (unique, counts) = np.unique(pred, return_counts=True)
-    pred_bin = np.argmax(pred_bin, axis=1)
-    Accuracy_bin = (metrics.accuracy_score(target_multi , pred_multi))
-    
+    pred_bin = np.argmax(pred_bin_raw, axis=1)
+    Accuracy_bin = (metrics.accuracy_score(target_bin , pred_bin))
+    Recall_bin = metrics.recall_score(target_bin, pred_bin, average="weighted")
+    Precision_bin = metrics.precision_score(target_bin, pred_bin, average="weighted")
+    F1score_bin = metrics.f1_score(target_bin, pred_bin, average="weighted")
+    Roc_auc_bin = metrics.roc_auc_score(to_categorical(target_bin), np.nan_to_num(pred_bin_raw), multi_class='ovr')
     for x in pred_bin:
         Total_bin += 1
         if x == 0:
@@ -230,10 +233,12 @@ def testing():
                 "DoSSlowloris_multi": DoSSlowloris_multi, "FTPPatator_multi": FTPPatator_multi, "Heartbleed_multi": Heartbleed_multi,
                 "Infiltration_multi": Infiltration_multi, "PortScan_multi": PortScan_multi, "SSHPatator_multi": SSHPatator_multi,
                 "BruteForce_multi": BruteForce_multi, "SQLInjection_multi": SQLInjection_multi, "Xss_multi": Xss_multi, 
-                "Accuracy_bin" : Accuracy_bin, "Benign_bin": Benign_bin, "Attack_bin" : Attack_bin, "Total_bin" : Total_bin,
+                "Accuracy_bin" : Accuracy_bin, "Precision_bin": Precision_bin, "Recall_bin": Recall_bin, "F1score_bin": F1score_bin, "Roc_auc_bin": Roc_auc_bin,
+                "Benign_bin": Benign_bin, "Attack_bin" : Attack_bin, "Total_bin" : Total_bin,
                 "Recall_multi": Recall_multi, "Precision_multi": Precision_multi, "F1score_multi": F1score_multi, "Roc_auc_multi": Roc_auc_multi}
 
     print(result)
+    del data_bin, target_bin, data_multi, target_multi, scaler, pred_bin_raw, pred_bin, pred_multi, pred_multi_raw
     return render_template('testing.html', result=result)
   
 

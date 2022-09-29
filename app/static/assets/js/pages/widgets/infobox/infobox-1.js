@@ -248,4 +248,44 @@ function initCharts() {
         spotColor: COLORS.SkyBlue,
         spotRadius: 0
     });
+    $('#linecustom20').sparkline('html',{
+        height: '55px',
+        width: '100%',
+        lineColor: COLORS.MidnightBlue,
+        fillColor: COLORS.MidnightBlue,
+        minSpotColor: true,
+        maxSpotColor: true,
+        spotColor: COLORS.MidnightBlue,
+        spotRadius: 0
+    });
+    $('#linecustom21').sparkline('html',{
+        height: '55px',
+        width: '100%',
+        lineColor: COLORS.Orchid,
+        fillColor: COLORS.Orchid,
+        minSpotColor: true,
+        maxSpotColor: true,
+        spotColor: COLORS.Orchid,
+        spotRadius: 0
+    });
+    $('#linecustom22').sparkline('html',{
+        height: '55px',
+        width: '100%',
+        lineColor: COLORS.RoyalBlue,
+        fillColor: COLORS.RoyalBlue,
+        minSpotColor: true,
+        maxSpotColor: true,
+        spotColor: COLORS.RoyalBlue,
+        spotRadius: 0
+    });
+    $('#linecustom23').sparkline('html',{
+        height: '55px',
+        width: '100%',
+        lineColor: COLORS.SkyBlue,
+        fillColor: COLORS.SkyBlue,
+        minSpotColor: true,
+        maxSpotColor: true,
+        spotColor: COLORS.SkyBlue,
+        spotRadius: 0
+    });
 }

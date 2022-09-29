@@ -7,7 +7,7 @@
 {% block content %}
 <script>
      $(document).ready(function() {
-                var ctx = $("#chart-line");
+                var ctx = $("#chart-line-multi");
                 var myLineChart = new Chart(ctx, {
                     type: 'pie',
                     data : {
@@ -29,14 +29,14 @@
                         }
                     }
                 });
-                var ctx = $("#chart-bar");
+                var ctx = $("#chart-bar-multi");
                 var colors = ['#0c1e3e','#38fbdb'];
                 var myLineChart = new Chart(ctx, {
                     type: 'bar',
 				data: {
-					labels: ["Accuracy", "Precision", "Recall", "F1 Score"],
+					labels: ["Accuracy", "Precision", "Recall", "F1 Score", "ROC AUC"],
 					datasets: [{
-							data: [parseFloat("{{result.Accuracy_multi}}"), parseFloat("{{result.Precision_multi}}"), parseFloat("{{result.Recall_multi}}"), parseFloat("{{result.F1score_multi}}")],
+							data: [parseFloat("{{result.Accuracy_multi}}"), parseFloat("{{result.Precision_multi}}"), parseFloat("{{result.Recall_multi}}"), parseFloat("{{result.F1score_multi}}"), parseFloat("{{result.Roc_auc_multi}}")],
 							backgroundColor: colors['0']
 						}
 					]
@@ -56,7 +56,53 @@
                 
             });
 </script>
-
+<script>
+    $(document).ready(function() {
+               var ctx = $("#chart-line-bin");
+               var myLineChart = new Chart(ctx, {
+                   type: 'pie',
+                   data : {
+                       labels: ["Benign", "Attack"],
+                       datasets: [{
+                           data: [parseFloat("{{result.Benign_bin}}"), 
+                           parseFloat("{{result.Attack_bin}}")],
+                           backgroundColor: ["#0c1e3e", "#122c5a"]
+                       }]
+                   },
+                   options: {
+                       title: {
+                           display: true,
+                           text: 'Типы пакетов',
+                       }
+                   }
+               });
+               var ctx = $("#chart-bar-bin");
+               var colors = ['#0c1e3e','#38fbdb'];
+               var myLineChart = new Chart(ctx, {
+                   type: 'bar',
+               data: {
+                   labels: ["Accuracy", "Precision", "Recall", "F1 Score", "ROC AUC"],
+                   datasets: [{
+                           data: [parseFloat("{{result.Accuracy_bin}}"), parseFloat("{{result.Precision_bin}}"), parseFloat("{{result.Recall_bin}}"), parseFloat("{{result.F1score_bin}}"), parseFloat("{{result.Roc_auc_bin}}")],
+                           backgroundColor: colors['1']
+                       }
+                   ]
+               },
+               options: {
+                   legend: {
+                       display: false
+                   },
+                   scales: {
+                       xAxes: [{
+                           barPercentage: 0.4,
+                           categoryPercentage: 0.5
+                       }]
+                   }
+               }
+               });
+               
+           });
+</script>
 <!-- Overlay For Sidebars -->
 <div class="overlay"></div>
 <section class="content">
@@ -82,10 +128,10 @@
        
         <!--Бинарная-->
         <div class="row clearfix">
-            <div class="col-md-6"> <!--блок с дашбордом-->
-                <div class="card">
+            <div class="col-lg-6 col-md-6 col-sm-12"> <!--блок с дашбордом-->
+                <div class="card" style="height: 100%">
                     <div class="card-header text-center">Статистика по пакетам</div>
-                    <div class="card-body" style="height: 600px">
+                    <div class="card-body">
                         <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
                             <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
                                 <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
@@ -93,11 +139,11 @@
                             <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
                                 <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
                             </div>
-                        </div> <canvas id="chart-line" width="299" height="200" class="chartjs-render-monitor" style="display: block; width: 299px; height: 200px;"></canvas>
+                        </div> <canvas id="chart-line-multi" class="chartjs-render-monitor" style="display: flex; width: 100%; height: 100%"></canvas>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6"> <!--блок с карточками-->
+            <div class="col-lg-6 col-md-6 col-sm-12"> <!--блок с карточками-->
                 <div class="row clearfix">
                     <div class="col-md-4 сol-lg-4 col-sm-12">
                         <div class="card overflowhidden">
@@ -192,7 +238,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header text-center">Характеристики мультиклассовой нейронной сети</div>
-                    <div class="card-body" style="height: 600px">
+                    <div class="card-body" style="height: 100%">
                         <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
                             <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
                                 <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
@@ -200,7 +246,7 @@
                             <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
                                 <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
                             </div>
-                        </div> <canvas id="chart-bar" width="299" height="200" class="chartjs-render-monitor" style="display: block; width: 299px; height: 200px;"></canvas>
+                        </div> <canvas id="chart-bar-multi" class="chartjs-render-monitor" style="display: block;"></canvas>
                     </div>
                 </div>
             </div>
@@ -270,8 +316,8 @@
                 <div class="card">
                     <div class="body block-header">
                         <div class="row">
-                            <div class="col-lg-6 col-md-8 col-sm-12 text-center">
-                                <h2>Тестирование LSTM нейросети для Бинарной классификации</h2>                                                       
+                            <div class="col-lg-6 col-md-8 col-sm-12">
+                                <h2>Тестирование LSTM нейросети для бинарной классификации</h2>                                                       
                             </div>
                         </div>
                     </div>
@@ -280,9 +326,9 @@
         </div>
         <div class="row clearfix">
             <div class="col-md-6"> <!--блок с дашбордом-->
-                <div class="card">
+                <div class="card" style="height: 100%">
                     <div class="card-header text-center">Статистика по типу пакета</div>
-                    <div class="card-body" style="height: 600px">
+                    <div class="card-body">
                         <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
                             <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
                                 <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
@@ -290,7 +336,7 @@
                             <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
                                 <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
                             </div>
-                        </div> <canvas id="chart-line" width="299" height="200" class="chartjs-render-monitor" style="display: block; width: 299px; height: 200px;"></canvas>
+                        </div> <canvas id="chart-line-bin" class="chartjs-render-monitor" style="display: block;"></canvas>
                     </div>
                 </div>
             </div>
@@ -302,7 +348,7 @@
                                 <h2 class="number count-to m-t-0 m-b-5" data-from="0" data-to="{{result.Accuracy_multi*100}}" data-speed="1000" data-fresh-interval="700">{{ result.Accuracy_bin*100 }}</h2>
                                 <p class="text-muted">Accuracy</p>                        
                             </div>
-                            <span id="linecustom1">0,{{ result.Accuracy_bin*100 }}</span>
+                            <span id="linecustom20">0,{{ result.Accuracy_bin*100 }}</span>
                         </div>
                     </div>
                     <div class="col-md-3 сol-lg-3 col-sm-12">
@@ -311,7 +357,7 @@
                                 <h2 class="number count-to m-t-0 m-b-5" data-from="0" data-to="{{result.Total_bin}}" data-speed="2000" data-fresh-interval="700">{{result.Total_bin}}</h2>
                                 <p class="text-muted">Total</p>                        
                             </div>
-                            <span id="linecustom3">0, {{result.Total_bin}}</span>
+                            <span id="linecustom21">0, {{result.Total_bin}}</span>
                         </div>
                     </div>
                     <div class="col-md-3 сol-lg-3 col-sm-12">
@@ -320,23 +366,23 @@
                                 <h2 class="number count-to m-t-0 m-b-5" data-from="0" data-to="{{result.Attack_bin}}" data-speed="2000" data-fresh-interval="700">{{result.Attack_bin}}</h2>
                                 <p class="text-muted">Attack</p>                        
                             </div>
-                            <span id="linecustom3">0, {{result.Attack_bin}}</span>
+                            <span id="linecustom22">0, {{result.Attack_bin}}</span>
                         </div>
                     </div>
                     <div class="col-md-3 сol-lg-3 col-sm-12">
                         <div class="card overflowhidden">
                             <div class="body">
                                 <h2 class="number count-to m-t-0 m-b-5" data-from="0" data-to="{{result.Benign_bin}}" data-speed="2000" data-fresh-interval="700">{{result.Benign_bin}}</h2>
-                                <p class="text-muted">Total</p>                        
+                                <p class="text-muted">Benign</p>                        
                             </div>
-                            <span id="linecustom3">0, {{result.Benign_bin}}</span>
+                            <span id="linecustom23">0, {{result.Benign_bin}}</span>
                         </div>
                     </div>
                 </div>
                 <div class="row clearfix" >
-                    <div class="card">
-                        <div class="card-header text-center">Характеристики мультиклассовой нейронной сети</div>
-                        <div class="card-body" style="height: 600px">
+                    <div class="card" style="height: 100%">
+                        <div class="card-header text-center">Характеристики бинарной нейронной сети</div>
+                        <div class="card-body">
                             <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
                                 <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
                                     <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
@@ -344,10 +390,10 @@
                                 <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
                                     <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
                                 </div>
-                            </div> <canvas id="chart-bar" width="299" height="200" class="chartjs-render-monitor" style="display: block; width: 299px; height: 200px;"></canvas>
+                            </div> <canvas id="chart-bar-bin" class="chartjs-render-monitor" style="display: block;"></canvas>
                         </div>
                     </div>
-                </div>>
+                </div>
             </div>
         </div>      
         <!-- #END# Basic Examples --> 
