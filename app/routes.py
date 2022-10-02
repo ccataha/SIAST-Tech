@@ -2,17 +2,14 @@ from distutils import core
 from unittest import result
 from flask import render_template, flash, redirect, url_for, request, session,  Response
 from flask import request, json, jsonify, Response 
-
+from flask_sse import sse
 from flask_login import login_user, login_required, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from sklearn import metrics
 from sklearn.preprocessing import MinMaxScaler
-from flask_sse import sse
-
 from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.models import Sequential, Model
-
 
 import psutil
 import netifaces
@@ -27,15 +24,15 @@ import os, signal
 from app.forms import If_form
 from app import app, db, manager
 from app.models import User
+
 flows = []
 resp = {}
 pid = None
 interface = ''
 basedir = os.path.abspath(os.path.dirname(__file__))
 core_resources = os.path.join(os.path.dirname(basedir), 'core_resources')
-     
-
-
+model_bin = pickle.load(open(os.path.join(core_resources, 'lstm.pkl'),"rb"))
+model_multi = pickle.load(open(os.path.join(core_resources, 'knn.pkl'),"rb"))  
 
 @app.route('/',methods=['GET'])  # 
 def index():
@@ -66,11 +63,7 @@ def cicflowmeter(start,interface):
         pid = p.pid
     elif not start:        
         os.kill(pid, signal.SIGSTOP)
-        
-        
-
-
-
+               
 @app.route('/start',methods=['POST','GET'])
 #@login_required           # decorators that modifies function follows
 def start():
@@ -78,9 +71,6 @@ def start():
         cicflowmeter(True,form.interface.data)
         session['interface'] = form.interface.data
         return redirect(url_for('home'))
-
-
-
 
 @app.route('/ip', methods=['GET'])
 #@login_required
@@ -91,7 +81,6 @@ def ip():
         # traceroute = subprocess.check_output([f'traceroute  {ip}'],shell=True)        
         message = {'whois': whois.decode("utf-8")}
         return jsonify(message)  # serialize and use JSON headers
-
 
 @app.route('/newInterface')
 #@login_required
@@ -109,9 +98,8 @@ def stop():
 
 
 #De-Serializing Model
-model = pickle.load(open(os.path.join(basedir, 'nids_model.pkl'),"rb"))
-model_bin = pickle.load(open(os.path.join(core_resources, 'lstm.pkl'),"rb"))
-model_multi = pickle.load(open(os.path.join(core_resources, 'knn.pkl'),"rb"))
+#model = pickle.load(open(os.path.join(basedir, 'nids_model.pkl'),"rb"))
+
 
 @app.route('/testing')
 #@login_required
