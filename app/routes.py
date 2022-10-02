@@ -248,36 +248,24 @@ def predict():
     req = request.get_json()
     df1 = pd.DataFrame(data=req["data"], columns=req["columns"] )
     df2 = df1.copy()
-    cols = [' Bwd Packet Length Std', ' min_seg_size_forward', ' PSH Flag Count',
-            ' Min Packet Length',' Init_Win_bytes_backward', ' ACK Flag Count', 
-            'Total Length of Fwd Packets', ' Subflow Fwd Bytes',
-            'Init_Win_bytes_forward', ' Bwd Packet Length Min', ' Fwd IAT Std',
-            ' Flow IAT Max', ' URG Flag Count',' Destination Port', ' Flow IAT Mean',
-            ' Flow Duration', ' Bwd Packets/s', 'Fwd IAT Total', 'Bwd IAT Total', 
-            ' act_data_pkt_fwd', ' Down/Up Ratio', ' Idle Min', ' Fwd Packet Length Min', 
-            ' Bwd IAT Max', ' Fwd Packet Length Mean']
+    cols = ['pkt_len_var', 'active_min', ' Fwd IAT Std',
+            'active_mean','active_max', ' min_seg_size_forward', 
+            'flow_iat_std', 'bwd_iat_mean',
+            ' PSH Flag Count', ' Flow IAT Mean', 'Total Length of Fwd Packets',
+            ' Subflow Fwd Bytes', 'bwd_iat_min','active_std', ' Bwd IAT Max',
+            'fwd_psh_flags', 'syn_flag_cnt', 'fwd_iat_mean', 'bwd_iat_std', 
+            'flow_iat_min', 'Init_Win_bytes_forward', ' Bwd Packet Length Min', 'fwd_iat_min']
     feature = df1[cols]
 
     # Making Pridiction
-    pred = model.predict(feature) 
+    pred_raw = model_bin.predict(feature, batch_size=256)
+    pred = np.argmax(pred_raw, axis=1) 
     label = pred[0]
 
     if label == 0:
         df1['label'] = 'Benign'
-    elif label == 1:
-        df1['label'] = 'Bot'
-    elif label == 2:
-        df1['label'] = 'DDoS'
-    elif label == 3:
-        df1['label'] = 'Infilteration'
-    elif label == 4:
-        df1['label'] = 'PortScan'
-    elif label == 5:
-        df1['label'] = 'Brute-Force'
-    elif label == 6:
-        df1['label'] = 'Sql-Injection'
-    elif label == 7:
-        df1['label'] = 'XSS'
+    if label == 1:
+        df1['label'] = 'Attack'
 
     df1.rename(columns = {" Destination Port": "dst_port"}, 
         inplace = True)
