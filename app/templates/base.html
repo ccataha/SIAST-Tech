@@ -72,20 +72,24 @@
 <script src="{{ url_for('static', filename='assets/js/pages/tables/jquery-datatable.js') }}"></script>
 <script src="{{ url_for('static', filename='assets/js/pages/widgets/infobox/infobox-1.js') }}"></script>
 <script src="{{ url_for('static', filename='assets/js/pages/widgets/infobox/Chart.bundle.min.js') }}"></script> <!--pie chart-->
-
+<script src="https://code.highcharts.com/highcharts.js"></script>
 <script type="text/javascript">
     var source = new EventSource("{{ url_for('sse.stream') }}");
     var flow = 0
     var benign = 0
     var attack = 0
+
     source.addEventListener('greeting', function(event) {
         var data = JSON.parse(event.data);        
         var table = $('#flowTable').DataTable();
         flow++
+
         if (data[0].label == "Benign"){
             benign++;
+            
         }else{
             attack++;
+
         }
         document.getElementById('flow').innerHTML = flow
         document.getElementById('benign').innerHTML = benign
@@ -121,9 +125,79 @@
         });
 
     }
+    Highcharts.setOptions({
+        global: {
+            useUTC: false
+        }
+    });
+    Highcharts.chart('container', {
+        chart: {
+            type: 'areaspline',
+            animation: Highcharts.svg, 
+            marginRight: 10,
+            events: {
+                load: function () {
+
+                    var series = this.series[0];
+                    setInterval(function () {
+                        var x = (new Date()).getTime(),
+                            y = flow;
+                        series.addPoint([x, y], true, true);
+                    }, 1000);
+                }
+            }
+        },
+        title: {
+            text: 'График входящих пакетов'
+        },
+        xAxis: {
+            type: 'datetime',
+            tickPixelInterval: 150
+        },
+        yAxis: {
+            title: {
+                text: 'Пакетов'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            formatter: function () {
+                return '<b>' + this.series.name + '</b><br/>' +
+                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                    Highcharts.numberFormat(this.y, 2);
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        exporting: {
+            enabled: true
+        },
+        series: [{
+            name: 'Зафиксировано событий',
+            color: 'rgba(214, 25, 25, 0.2)',
+            data: (function () {
+                var data = [],
+                    time = (new Date()).getTime(),
+                    i;
+                //i - кол-во таймстемпов
+                for (i = -100; i <= 0; i += 1) {
+                    data.push({
+                        x: time + i * 1000,
+                        y: flow
+                    });
+                }
+                return data;
+            }())
+        }]
+    });
 </script> 
 <script>
-   
+
 </script>
 </body>
 </html>
