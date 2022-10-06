@@ -27,8 +27,8 @@ To check status
 ```
 ## Installing Application: 
 ```sh
-git clone https://github.com/farazahmadkhan15/NIDS_APP.git 
-cd NIDS_APP 
+git clone https://github.com/koidula/SIAST-Tech.git 
+cd SIAST-Tech
 python3 -m venv venv 
 . venv/bin/activate 
  pip install -r requirements.txt 
