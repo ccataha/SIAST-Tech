@@ -10,9 +10,7 @@ Please refer https://gitlab.com/hieulw/cicflowmeter.git  for seperate use
 ### Installation
 
 ```sh
-git clone https://github.com/farazahmadkhan15/cicflowmeter-NIDS.git
-cd cicflowmeter-NIDS
-sudo python setup.py install
+In progress
 ```
 
 
