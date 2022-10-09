@@ -121,7 +121,7 @@ def testing():
     Xss_multi = 0 
     Bot_multi = 0
 
-    file_bin = pd.read_csv(os.path.join(core_resources, 'test_x_smt.csv'));
+    file_bin = pd.read_csv(os.path.join(core_resources, 'x_smt.csv'));
     file_bin = file_bin[file_bin.label != "BENIGN"] 
     from sklearn.preprocessing import LabelEncoder
     le = LabelEncoder()
@@ -179,7 +179,7 @@ def testing():
     Total_bin = 0
     data_bin = []
     target_bin = []
-    file = pd.read_csv(os.path.join(core_resources, 'test_x_smt.csv'));
+    file = pd.read_csv(os.path.join(core_resources, 'x_smt.csv'));
     for n, i in file.iterrows():
         a = []
         for j in i[:-1]:
@@ -248,43 +248,43 @@ def predict():
     feature = df1[cols]
 
     # Making Pridiction
-    pred_raw = model_bin.predict(feature, batch_size=256)
-    pred = np.argmax(pred_raw, axis=1) 
-    label = pred[0]
+    pred_raw_bin = model_bin.predict(feature, batch_size=256)
+    pred_bin = np.argmax(pred_raw_bin, axis=1) 
+    label_bin = pred_bin[0]
 
-    if label == 0:
+    if label_bin == 0:
         df1['label'] = 'Benign'
-    if label == 1:
-        pred_raw = model_multi.predict(feature, batch_size=256)
-        pred = np.argmax(pred_raw, axis=1)
-        label = pred[0]
-        if label == 0:
+    elif label_bin == 1:
+        pred_raw_multi = model_multi.predict(feature, batch_size=256)
+        pred_multi = np.argmax(pred_raw_multi, axis=1)
+        label_multi = pred_multi[0]
+        if label_multi == 0:
             df1['label'] = 'Bot'
-        elif label == 1:
+        elif label_multi == 1:
             df1['label'] = 'DDoS'
-        elif label == 2:
+        elif label_multi == 2:
             df1['label'] = 'DoS GoldenEye'
-        elif label == 3:
+        elif label_multi == 3:
             df1['label'] = 'DoS Hulk'
-        elif label == 4:
+        elif label_multi == 4:
             df1['label'] = 'DoS Slow Http Test'
-        elif label == 5:
+        elif label_multi == 5:
             df1['label'] = 'DoS Slowloris'
-        elif label == 6:
+        elif label_multi == 6:
             df1['label'] = 'FTP Patator'
-        elif label == 7:
+        elif label_multi == 7:
             df1['label'] = 'Heartbleed'
-        elif label == 8:
+        elif label_multi == 8:
             df1['label'] = 'Infiltration'
-        elif label == 9:
+        elif label_multi == 9:
             df1['label'] = 'Port Scan'
-        elif label == 10:
+        elif label_multi == 10:
             df1['label'] = 'SSH Patator'
-        elif label == 11:
+        elif label_multi == 11:
             df1['label'] = 'Brute Force'
-        elif label == 12:
+        elif label_multi == 12:
             df1['label'] = 'SQL Injection'
-        elif label == 13:
+        elif label_multi == 13:
             df1['label'] = 'XSS'
         else:
             df1['label'] = 'Error'
