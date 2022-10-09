@@ -10,6 +10,7 @@ from sklearn import metrics
 from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.models import Sequential, Model
+from tensorflow.keras.backend import clear_session
 
 import psutil
 import netifaces
@@ -227,6 +228,7 @@ def testing():
 
     print(result)
     del data_bin, target_bin, data_multi, target_multi, scaler, pred_bin_raw, pred_bin, pred_multi, pred_multi_raw
+    clear_session()
     return render_template('testing.html', result=result)
   
 

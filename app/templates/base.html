@@ -22,12 +22,16 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 </head>
 <body class="theme-indigo">
+    <style>
+        body {
+          background-color: #38383f;
+        }
+    </style>
 <!-- Page Loader -->
 
 <div class="page-loader-wrapper">
     <div class="loader">
-        <div class="m-t-30"><img class="zmdi-hc-spin" src="{{ url_for('static', filename='ExAsset/images/logo.svg') }}" width="48" height="48" alt="InfiniO"></div>
-        <p>Пожалуйста, подождите...</p>        
+        <div class="m-t-30"><img class="zmdi-hc-spin" src="{{ url_for('static', filename='ExAsset/images/logo.png') }}" width="48" height="48"></div>   
     </div>
 </div>
 <!-- Overlay For Sidebars -->
@@ -48,8 +52,55 @@
     </div>        
 </div>
 </nav>
-
-
+<div class="page-loader-wrapper">
+    <div class="loader">
+        <div class="m-t-30"><img class="zmdi-hc-spin" src="../assets/images/logo.png" width="48" height="48"></div>       
+    </div>
+</div>
+     <!-- Modal для прогрузки тестирования-->
+     <div class="modal fade" id="Modal-loading-neural" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Ожидайте</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Происходит тестирование ступеней нейросети. Вы будете перенаправлены автоматически.</p>                    
+                </div>
+                <div class="modal-footer">
+                    <div class="loading-spinner mb-2"></div>
+                 </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    <style>
+    #Modal-loading-neural {
+      top:70%;
+      left:27%;
+      outline: none;
+    }
+    .loading-spinner{
+    width:50px;
+    height:50px;
+    border:10px solid rgb(0, 0, 0);
+    border-radius:50%;
+    border-top-color:#0001;
+    display:inline-block;
+    animation:loadingspinner .7s linear infinite;
+    }
+    @keyframes loadingspinner{
+    0%{transform:rotate(0deg)}
+    100%{transform:rotate(360deg)}
+    }
+    </style>
+    </div><!--  Modal для прогрузки тестирования- -->
+    <script type="text/javascript">
+        function loading(){
+          $("#Modal-loading-neural").modal('toggle')
+          $("#Modal-loading-neural").show();
+          window.location.href='/testing';     
+        }
+    </script>
 {% endblock nav %}
 
 
@@ -58,7 +109,7 @@
 <!-- Main Content -->
 
  {% block content %}
-     
+
  {% endblock  %}
 
 <!-- Jquery Core Js --> 

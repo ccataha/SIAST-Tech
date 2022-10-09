@@ -19,7 +19,7 @@
                             parseFloat("{{result.SSHPatator_multi}}")+parseFloat("{{result.FTPPatator_multi}}"), 
                             parseFloat("{{result.BruteForce_multi}}")+parseFloat("{{result.Xss_multi}}")+parseFloat("{{result.SQLInjection_multi}}"), 
                             parseFloat("{{result.Infiltration_multi}}")],
-                            backgroundColor: ["#0c1e3e", "#122c5a", "#38fbdb", "#fc0ff5", "#0c1b3e", "#38fb3b"]
+                            backgroundColor: ["#0c1e3e", "#122c5a", "#38fbdb", "#fc0ff5", "#8e52f5", "#4cbb17"]
                         }]
                     },
                     options: {
@@ -30,14 +30,13 @@
                     }
                 });
                 var ctx = $("#chart-bar-multi");
-                var colors = ['#0c1e3e','#38fbdb'];
                 var myLineChart = new Chart(ctx, {
                     type: 'bar',
 				data: {
 					labels: ["Accuracy", "Precision", "Recall", "F1 Score", "ROC AUC"],
 					datasets: [{
 							data: [parseFloat("{{result.Accuracy_multi}}"), parseFloat("{{result.Precision_multi}}"), parseFloat("{{result.Recall_multi}}"), parseFloat("{{result.F1score_multi}}"), parseFloat("{{result.Roc_auc_multi}}")],
-							backgroundColor: colors['0']
+							backgroundColor: "#30ba8f"
 						}
 					]
 				},
@@ -66,8 +65,8 @@
                        datasets: [{
                            data: [parseFloat("{{result.Benign_bin}}"), 
                            parseFloat("{{result.Attack_bin}}")],
-                           backgroundColor: ["#0c1e3e", "#122c5a"]
-                       }]
+                           backgroundColor: ["#0c1e3e", "#fc0ff5"]
+                       }]   
                    },
                    options: {
                        title: {
@@ -77,14 +76,13 @@
                    }
                });
                var ctx = $("#chart-bar-bin");
-               var colors = ['#0c1e3e','#38fbdb'];
                var myLineChart = new Chart(ctx, {
                    type: 'bar',
                data: {
                    labels: ["Accuracy", "Precision", "Recall", "F1 Score", "ROC AUC"],
                    datasets: [{
                            data: [parseFloat("{{result.Accuracy_bin}}"), parseFloat("{{result.Precision_bin}}"), parseFloat("{{result.Recall_bin}}"), parseFloat("{{result.F1score_bin}}"), parseFloat("{{result.Roc_auc_bin}}")],
-                           backgroundColor: colors['1']
+                           backgroundColor: "#0c1e3e"
                        }
                    ]
                },
@@ -117,7 +115,7 @@
                                                          
                             </div>
                             <div class="col-lg-6 col-md-4 col-sm-12 text-right">
-                                <a href="{{ url_for('analyze') }}"> <button class="btn btn-outline-light btn-lg px-5" type="submit">Выбрать интерфейс</button> </a>
+                                <a href="{{ url_for('analyze') }}"> <button class="btn btn-outline-light btn-lg px-5" type="submit">К выбору интерфейса</button> </a>
                             </div>  
                         </div>
                     </div>
@@ -126,7 +124,7 @@
         </div>
         <!-- Basic Examples -->
        
-        <!--Бинарная-->
+        <!--Мультиклассовая-->
         <div class="row clearfix">
             <div class="col-lg-6 col-md-6 col-sm-12"> <!--блок с дашбордом-->
                 <div class="card" style="height: 100%">
@@ -345,7 +343,7 @@
                     <div class="col-md-3 сol-lg-3 col-sm-12">
                         <div class="card overflowhidden">
                             <div class="body">
-                                <h2 class="number count-to m-t-0 m-b-5" data-from="0" data-to="{{result.Accuracy_multi*100}}" data-speed="1000" data-fresh-interval="700">{{ result.Accuracy_bin*100 }}</h2>
+                                <h2 class="number count-to m-t-0 m-b-5" data-from="0" data-to="{{result.Accuracy_bin*100}}" data-speed="1000" data-fresh-interval="700">{{ result.Accuracy_bin*100 }}</h2>
                                 <p class="text-muted">Accuracy</p>                        
                             </div>
                             <span id="linecustom20">0,{{ result.Accuracy_bin*100 }}</span>
