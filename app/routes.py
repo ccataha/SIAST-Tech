@@ -11,6 +11,7 @@ from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.models import Sequential, Model
 from tensorflow.keras.backend import clear_session
+from sklearn.neighbors import KNeighborsClassifier
 
 import psutil
 import netifaces
@@ -248,15 +249,16 @@ def predict():
     feature = df1[cols]
 
     # Making Pridiction
-    pred_raw_bin = model_bin.predict(feature, batch_size=256)
+    #pred_raw_bin = model_bin.predict(feature, batch_size=256)
+    pred_raw_bin = model_bin.predict(feature)
     pred_bin = np.argmax(pred_raw_bin, axis=1) 
     label_bin = pred_bin[0]
 
     if label_bin == 0:
         df1['label'] = 'Benign'
     elif label_bin == 1:
-        pred_raw_multi = model_multi.predict(feature, batch_size=256)
-        pred_multi = np.argmax(pred_raw_multi, axis=1)
+        pred_multi = model_multi.predict(feature)
+        #pred_multi = np.argmax(pred_raw_multi, axis=1)
         label_multi = pred_multi[0]
         if label_multi == 0:
             df1['label'] = 'Bot'
